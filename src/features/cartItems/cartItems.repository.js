@@ -14,7 +14,11 @@ export default class CartItemsRepository {
             // 1 . Get the db.
             const db = getDB();
             const collection = db.collection(this.collection);
-            await collection.insertOne({ productID: new ObjectId(productID), userID: new ObjectId(userID), quantity })
+            await collection.updateOne({ productID: new ObjectId(productID), userID: new ObjectId(userID) },
+                { $inc: { quantity: quantity } },
+                { upsert: true }
+            )
+
         } catch (err) {
             console.log(err);
             throw new ApplicationError("Something went wrong with the database", 500)
@@ -32,7 +36,7 @@ export default class CartItemsRepository {
         }
     }
 
-    async delete(userID,cartItemID) {
+    async delete(userID, cartItemID) {
         try {
             const db = getDB();
             const collection = db.collection(this.collection);

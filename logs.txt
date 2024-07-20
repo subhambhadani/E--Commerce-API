@@ -77,3 +77,14 @@
 {"level":"info","message":"/api/cartItems?productID=6690fc353aefc1454955d450&quantity=10 - undefined","service":"request-logging"}
 {"level":"info","message":"/api/cartItems?productID=6690fc353aefc1454955d450&quantity=10 - undefined","service":"request-logging"}
 {"level":"info","message":"/api/cartItems/669a6f4823c108057010f04e - undefined","service":"request-logging"}
+{"level":"info","message":"/api/cartItems?productID=6690fc353aefc1454955d450&quantity=2 - undefined","service":"request-logging"}
+{"level":"info","message":"/api/cartItems - undefined","service":"request-logging"}
+{"level":"info","message":"/api/cartItems - undefined","service":"request-logging"}
+{"level":"info","message":"/api/cartItems - undefined","service":"request-logging"}
+{"level":"info","message":"/api/cartItems - undefined","service":"request-logging"}
+{"level":"info","message":"/api/cartItems - undefined","service":"request-logging"}
+{"level":"info","message":"/api/cartItems - undefined","service":"request-logging"}
+{"level":"info","message":"/api/cartItems - undefined","service":"request-logging"}
+{"level":"info","message":"/api/cartItems - undefined","service":"request-logging"}
+{"level":"info","message":"/api/cartItems - undefined","service":"request-logging"}
+{"level":"info","message":"/api/cartItems - undefined","service":"request-logging"}
