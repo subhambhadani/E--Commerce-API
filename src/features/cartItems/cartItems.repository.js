@@ -1,4 +1,4 @@
-import { ObjectId } from "bson";
+import { ObjectId } from "mongodb";
 import { getDB } from "../../config/mongodb.js";
 import { ApplicationError } from "../../error-handler/applicationError.js";
 
@@ -6,7 +6,7 @@ import { ApplicationError } from "../../error-handler/applicationError.js";
 export default class CartItemsRepository {
 
     constructor() {
-        this.collection = "cartItmes";
+        this.collection = "cartItems";
     }
 
     async add(productID, userID, quantity) {
@@ -14,10 +14,19 @@ export default class CartItemsRepository {
             // 1 . Get the db.
             const db = getDB();
             const collection = db.collection(this.collection);
-            await collection.updateOne({ productID: new ObjectId(productID), userID: new ObjectId(userID) },
-                { $inc: { quantity: quantity } },
-                { upsert: true }
-            )
+            const id = await this.getNextCounter(db);
+            // find the document
+            // either insert or update
+            // Insertion.
+            await collection.updateOne(
+                { productID: new ObjectId(productID), userID: new ObjectId(userID) },
+                {
+                    $setOnInsert: { _id: id },
+                    $inc: {
+                        quantity: quantity
+                    }
+                },
+                { upsert: true })
 
         } catch (err) {
             console.log(err);
@@ -46,6 +55,17 @@ export default class CartItemsRepository {
             console.log(err);
             throw new ApplicationError("Something went wrong with the database", 500)
         }
+    }
+
+    async getNextCounter(db) {
+
+        const resultDocument = await db.collection("counters").findOneAndUpdate(
+            { _id: 'cartItemId' },
+            { $inc: { value: 1 } },
+            { returnDocument: 'after' }
+        )
+        console.log(resultDocument);
+        return resultDocument.value.value;
     }
 
 }
