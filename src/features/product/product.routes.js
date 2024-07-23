@@ -28,6 +28,10 @@ productRouter.post(
         productController.addProduct(req, res)
     });
 
+productRouter.get('/averagePrice', (req, res, next) => {
+        productController.averagePrice(req, res)
+    })
+
 productRouter.get('/:id', (req, res) => {
     productController.getOneProduct(req, res)
 });
@@ -35,6 +39,8 @@ productRouter.get('/:id', (req, res) => {
 productRouter.post('/rate', (req, res, next) => {
     productController.rateProduct(req, res, next)
 });
+
+
 
 
 export default productRouter;
