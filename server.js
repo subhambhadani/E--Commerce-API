@@ -16,6 +16,7 @@ import apiDocs from './swagger.json' assert {type:'json'} ;
 import loggerMiddleware from './src/middlewares/logger.middleware.js';
 import { ApplicationError } from './src/error-handler/applicationError.js';
 import {connectToMongoDB} from './src/config/mongodb.js';
+import orderRouter from "./src/features/order/order.router.js";
 
 
 // 2. Create Server
@@ -36,6 +37,7 @@ server.use(express.json());
 // server.use(bodyParser.json());
 // for all requests related to product, redirect to product routes.
 // localhost:3200/api/products
+server.use("/api/orders", jwtAuth, orderRouter);
 server.use("/api-docs", swagger.serve, swagger.setup(apiDocs));
 server.use("/api/products",jwtAuth, productRouter);
 server.use("/api/users", userRouter);
