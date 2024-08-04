@@ -9,7 +9,21 @@ export default class UserController {
         this.userRepository = new UserRepository();
     }
 
-    async signUp(req, res) {
+    async resetPassword(req, res, next) {
+        const { newPassword } = req.body;
+        const hashedPassword = await bcrypt.hash(newPassword, 12);
+        const userID = req.userID;
+        try {
+            await this.userRepository.resetPassword(userID, hashedPassword);
+            res.status(200).send("Password is updated");
+        } catch (err) {
+            console.log(err);
+            console.log("Passing error to middleware");
+            next(err);
+        }
+    }
+
+    async signUp(req, res, next) {
 
         try {
             const {
@@ -29,7 +43,9 @@ export default class UserController {
             await this.userRepository.signUp(user);
             res.status(201).send(user);
         } catch (err) {
-            console.log(err);
+            // console.log(err);
+            // return res.status(404).send("Something went wrong");
+            next(err)
         }
 
     }
